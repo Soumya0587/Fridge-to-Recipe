@@ -1,6 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import AuthMenu from "@/components/AuthMenu";
+import Logo from "@/components/Logo";
+import { createSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 type Ingredient = { name: string; confidence: "high" | "medium" | "low"; quantity_hint: string | null };
 type ApiResponse = {
@@ -45,6 +48,28 @@ export default function Home() {
   const [maxMinutes, setMaxMinutes] = useState(45);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // On mount: if user is signed in, hydrate preferences from their profile.
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return;
+    const supabase = createSupabaseBrowserClient();
+    (async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData?.user) return;
+      const { data } = await supabase
+        .from("profiles")
+        .select("preferences")
+        .eq("id", userData.user.id)
+        .maybeSingle();
+      const p = (data?.preferences ?? {}) as {
+        cuisine?: string; diet?: string; servings?: number; maxMinutes?: number;
+      };
+      if (p.cuisine) setCuisine(p.cuisine);
+      if (p.diet) setDiet(p.diet);
+      if (typeof p.servings === "number") setServings(p.servings);
+      if (typeof p.maxMinutes === "number") setMaxMinutes(p.maxMinutes);
+    })();
+  }, []);
+
   function onPick(f: File | null) {
     setResult(null);
     setFile(f);
@@ -84,6 +109,12 @@ export default function Home() {
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+      {/* TOP BAR */}
+      <div className="mb-8 flex items-center justify-between">
+        <Logo />
+        <AuthMenu />
+      </div>
+
       {/* HEADER */}
       <header className="mb-10 sm:mb-14">
         <div className="flex flex-col items-center gap-4 text-center">
