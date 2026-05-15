@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base: #f5f7f1;
+  --ink: #1c2a1e;
+  --ink-soft: #4a5a4a;
+  --basil: #22a06b;
+  --basil-deep: #168057;
+  --olive: #6b8e23;
+  --turmeric: #f59e0b;
+  --tomato: #ef4444;
+  --cream: #fffaf0;
+  --herb: #94c973;
+  --line: rgba(34, 84, 53, 0.12);
+}
+
+html,
+body {
+  background: var(--bg-base);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* Subtle base — fresh but not loud. */
+body {
+  background:
+    radial-gradient(50rem 35rem at 15% 8%,  rgba(132, 204, 22, 0.30) 0%, transparent 60%),
+    radial-gradient(45rem 30rem at 92% 18%, rgba(251, 191, 36, 0.25) 0%, transparent 60%),
+    radial-gradient(40rem 30rem at 85% 95%, rgba(16, 185, 129, 0.28) 0%, transparent 60%),
+    linear-gradient(140deg, #f5faec 0%, #ebf5da 45%, #fff5dc 100%);
+  background-attachment: fixed;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Food photo, softened so text reads cleanly above the cards. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -40px;
+  background-image: url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&w=2400&q=80");
+  background-size: cover;
+  background-position: center;
+  filter: blur(32px) saturate(135%) brightness(1.03);
+  opacity: 0.32;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Cream wash for contrast — heavier than before since cards now sit on it. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 253, 245, 0.55) 0%, rgba(255, 253, 245, 0.7) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+main { position: relative; z-index: 1; }
+
+.font-display { font-family: var(--font-playfair), Georgia, serif; }
+
+.glass {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(34, 160, 107, 0.18);
+  box-shadow:
+    0 30px 60px -20px rgba(22, 80, 50, 0.18),
+    0 1px 0 0 rgba(255, 255, 255, 0.85) inset;
+}
+
+.glass-soft {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(34, 160, 107, 0.12);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #34c98a 0%, #22a06b 45%, #168057 100%);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 25px -10px rgba(34, 160, 107, 0.55);
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 32px -10px rgba(34, 160, 107, 0.65);
+  filter: brightness(1.04);
+}
+.btn-primary:disabled {
+  background: #d4d7d0;
+  color: #8a8f85;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.input {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(34, 84, 53, 0.18);
+  color: var(--ink);
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.input::placeholder { color: #8a948a; }
+.input:focus {
+  outline: none;
+  border-color: rgba(34, 160, 107, 0.55);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 3px rgba(34, 160, 107, 0.12);
+}
+
+.chip-high   { background: rgba(34, 160, 107, 0.12); border-color: rgba(34, 160, 107, 0.35); color: #166042; }
+.chip-medium { background: rgba(245, 158, 11, 0.14); border-color: rgba(245, 158, 11, 0.4);  color: #8a5208; }
+.chip-low    { background: rgba(0, 0, 0, 0.04);       border-color: rgba(0, 0, 0, 0.12);      color: #4b5563; }
+
+.dropzone {
+  border: 1.5px dashed rgba(34, 160, 107, 0.35);
+  background:
+    linear-gradient(135deg, rgba(34, 160, 107, 0.05), rgba(245, 158, 11, 0.05));
+  transition: all 0.2s ease;
+}
+.dropzone:hover {
+  border-color: rgba(34, 160, 107, 0.7);
+  background:
+    linear-gradient(135deg, rgba(34, 160, 107, 0.1), rgba(245, 158, 11, 0.08));
+}
+
+.badge-pill {
+  border: 1px solid rgba(34, 160, 107, 0.3);
+  background: rgba(34, 160, 107, 0.08);
+  color: #166042;
+}
+
+.step-num {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #22a06b, #168057);
+  border-radius: 999px;
+  padding: 4px 10px;
+  box-shadow: 0 4px 12px -4px rgba(22, 128, 87, 0.5);
+}
+
+.divider-herb {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 160, 107, 0.4), transparent);
+  margin: 24px 0;
+}
+
+.empty-tile {
+  background: linear-gradient(135deg, rgba(132, 204, 22, 0.08), rgba(251, 191, 36, 0.08));
+  border: 1px dashed rgba(34, 160, 107, 0.25);
+  border-radius: 16px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+.empty-tile:hover {
+  background: linear-gradient(135deg, rgba(132, 204, 22, 0.14), rgba(251, 191, 36, 0.14));
+  border-color: rgba(34, 160, 107, 0.4);
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(34, 160, 107, 0) 0%,
+    rgba(34, 160, 107, 0.55) 50%,
+    rgba(34, 160, 107, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
